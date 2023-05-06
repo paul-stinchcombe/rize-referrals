@@ -2,14 +2,14 @@ require('dotenv').config()
 
 const app = require('express')()
 const mysql = require('mysql')
-const connection = mysql.createConnection({
+const conn = mysql.createConnection({
   host: 'localhost',
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DB,
 })
 
-connection.connect((err) => {
+conn.connect((err) => {
   if (err) {
     console.error(err.message)
     process.exit(1)
@@ -19,7 +19,20 @@ connection.connect((err) => {
   })
 })
 
-app.get('/:referral_code', (req, res) => {
+app.get('/:referral_code', async (req, res) => {
   const { refCode } = req.params
-  res.send('<h1>Hello</h1>')
+  const ok = await addReferral(refCode)
+  res.status(ok ? 200 : 400).json({ success: ok })
 })
+
+async function addReferral(refCode) {
+  const referral = { referral_code: refCode }
+  conn.query('INSERT INTO referrals SET ?', author, (err, res) => {
+    if (err) {
+      console.error(err.message)
+      return false
+    }
+    console.log('Last insert ID:', res.insertId)
+    return true
+  })
+}
