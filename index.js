@@ -27,7 +27,7 @@ app.get('/:referral_code', async (req, res) => {
 
 async function addReferral(refCode) {
   const referral = { referral_code: refCode }
-  conn.query('INSERT INTO referrals SET ?', author, (err, res) => {
+  conn.query('INSERT INTO referrals SET ?', referral, (err, res) => {
     if (err) {
       console.error(err.message)
       return false
