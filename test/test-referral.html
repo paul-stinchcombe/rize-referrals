@@ -4,16 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'unsafe-inline'"
-    />
     <title>Test Referral</title>
   </head>
   <body>
     <div id="result"></div>
     <script>
-      const url = new URL('http://localhost:3000/54321')
+      const url = new URL('https://invite.rize.com.my/54321')
       fetch(url)
         .then((res) => res.json())
         .then(
