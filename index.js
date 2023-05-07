@@ -23,20 +23,21 @@ app.get('/:refCode', async (req, res) => {
   const { refCode } = req.params
   const ok = await addReferral(refCode)
   let status = 400
-
   if (ok) status = 200
   res.status(status).json({ success: ok })
 })
 
-async function addReferral(refCode) {
-  console.log(`Adding referral '${refCode}'`)
-  const referral = { referral_code: refCode }
-  conn.query('INSERT INTO referrals SET ?', referral, (err, res) => {
-    if (err) {
-      console.error(err.message)
-      return false
-    }
-    console.log('Last insert ID:', res.insertId)
-    return true
+function addReferral(refCode) {
+  return new Promise((resolve, reject) => {
+    console.log(`Adding referral '${refCode}'`)
+    const referral = { referral_code: refCode }
+    conn.query('INSERT INTO referrals SET ?', referral, (err, res) => {
+      if (err) {
+        console.error(err.message)
+        resolve(false)
+      }
+      console.log('Last insert ID:', res.insertId)
+      resolve(true)
+    })
   })
 }
