@@ -19,13 +19,14 @@ conn.connect((err) => {
   })
 })
 
-app.get('/:referral_code', async (req, res) => {
+app.get('/:refCode', async (req, res) => {
   const { refCode } = req.params
   const ok = await addReferral(refCode)
   res.status(ok ? 200 : 400).json({ success: ok })
 })
 
 async function addReferral(refCode) {
+  console.log(`Adding referral '${refCode}'`)
   const referral = { referral_code: refCode }
   conn.query('INSERT INTO referrals SET ?', referral, (err, res) => {
     if (err) {
