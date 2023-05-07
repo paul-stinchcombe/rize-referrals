@@ -3,7 +3,7 @@ require('dotenv').config()
 const app = require('express')()
 const mysql = require('mysql')
 const conn = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DB,
