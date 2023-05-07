@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const app = require('express')()
+const cors = require('cors')
 const mysql = require('mysql')
 const conn = mysql.createConnection({
   host: '127.0.0.1',
@@ -8,6 +9,8 @@ const conn = mysql.createConnection({
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DB,
 })
+
+app.use(cors())
 
 conn.connect((err) => {
   if (err) {
