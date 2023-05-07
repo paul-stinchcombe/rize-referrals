@@ -22,7 +22,10 @@ conn.connect((err) => {
 app.get('/:refCode', async (req, res) => {
   const { refCode } = req.params
   const ok = await addReferral(refCode)
-  res.status(ok ? 200 : 400).json({ success: ok })
+  let status = 400
+
+  if (ok) status = 200
+  res.status(status).json({ success: ok })
 })
 
 async function addReferral(refCode) {
